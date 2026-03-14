@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fika Cafe — Kalwa's Favourite Spot for Flavor & Vibes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══ RESET ══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#1a1108}
+::-webkit-scrollbar-thumb{background:#8B5E3C;border-radius:2px}
+
+/* ══ VARIABLES ══ */
+:root{
+  --espresso:   #1a1108;
+  --roast:      #2d1f0e;
+  --mocha:      #4a2e14;
+  --caramel:    #8B5E3C;
+  --latte:      #C4956A;
+  --cream:      #F5ECD7;
+  --cream2:     #EDE0C8;
+  --oat:        #FAF4E8;
+  --white:      #FFFFFF;
+  --muted:      #9a8870;
+  --border:     rgba(196,149,106,.2);
+  --serif:      'Cormorant Garamond',serif;
+  --sans:       'Jost',sans-serif;
+  --radius:     12px;
+}
+
+body{
+  font-family:var(--sans);
+  background:var(--oat);
+  color:var(--roast);
+  overflow-x:hidden;
+  line-height:1.6;
+}
+
+/* ══ FADE ANIMATIONS ══ */
+.fade-up{
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity .75s ease, transform .75s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+.fade-up.d1{transition-delay:.1s}
+.fade-up.d2{transition-delay:.2s}
+.fade-up.d3{transition-delay:.3s}
+.fade-up.d4{transition-delay:.4s}
+.fade-up.d5{transition-delay:.5s}
+
+/* ══ NAVBAR ══ */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:70px;padding:0 6%;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .4s ease;
+  background:transparent;
+}
+#navbar.scrolled{
+  background:rgba(26,17,8,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+  height:60px;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;text-decoration:none;
+}
+.nav-logo-icon{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--caramel);
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;
+}
+.nav-logo-text{
+  font-family:var(--serif);font-size:18px;font-weight:600;
+  color:var(--cream);letter-spacing:.04em;line-height:1.15;
+}
+.nav-logo-text span{
+  display:block;font-family:var(--sans);font-size:9px;
+  font-weight:300;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--latte);margin-top:1px;
+}
+.nav-links{display:flex;gap:30px;list-style:none}
+.nav-links a{
+  font-size:12px;font-weight:400;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(245,236,215,.75);
+  text-decoration:none;cursor:pointer;transition:color .2s;
+}
+.nav-links a:hover{color:var(--latte)}
+.nav-cta{
+  background:var(--caramel);color:var(--cream);
+  font-family:var(--sans);font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:10px 24px;border:none;cursor:pointer;
+  border-radius:50px;transition:all .3s;
+}
+.nav-cta:hover{background:var(--latte);transform:translateY(-1px)}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  cursor:pointer;padding:4px;
+}
+.hamburger span{
+  width:22px;height:1.5px;background:var(--cream);
+  display:block;transition:all .3s;
+}
+
+/* Mobile Nav */
+#mob-nav{
+  display:none;position:fixed;inset:0;
+  background:rgba(26,17,8,.98);z-index:490;
+  flex-direction:column;align-items:center;justify-content:center;gap:28px;
+}
+#mob-nav.open{display:flex}
+#mob-nav a{
+  font-family:var(--serif);font-size:28px;font-weight:400;
+  color:var(--cream2);cursor:pointer;transition:color .2s;
+  letter-spacing:.04em;
+}
+#mob-nav a:hover{color:var(--latte)}
+
+/* ══ HERO ══ */
+#hero{
+  position:relative;height:100vh;min-height:620px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:-8%;z-index:0;
+  background:
+    linear-gradient(to bottom,rgba(26,17,8,.5) 0%,rgba(26,17,8,.65) 50%,rgba(26,17,8,.92) 100%),
+    linear-gradient(135deg,#1a1108 0%,#2d1a08 30%,#3a2010 60%,#1a1108 100%);
+  animation:hzoom 14s ease-in-out infinite alternate;
+}
+/* coffee art bg */
+.hero-art{position:absolute;inset:0;z-index:0;overflow:hidden;opacity:.08}
+.hero-art svg{width:100%;height:100%}
+@keyframes hzoom{from{transform:scale(1)}to{transform:scale(1.07)}}
+
+.hero-bg-img{
+  position:absolute;inset:0;z-index:0;
+  background-image:url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&q=80');
+  background-size:cover;background-position:center;
+  opacity:.35;
+  animation:hzoom 14s ease-in-out infinite alternate;
+}
+
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 7%;max-width:740px;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--latte);margin-bottom:20px;
+  opacity:0;animation:fadeUp .8s .3s forwards;
+}
+.hero-tag::before{content:'';width:28px;height:1px;background:var(--latte)}
+.hero-h1{
+  font-family:var(--serif);
+  font-size:clamp(48px,7vw,96px);
+  font-weight:500;line-height:1.0;
+  color:var(--cream);margin-bottom:6px;
+  opacity:0;animation:fadeUp .8s .5s forwards;
+}
+.hero-h1 em{
+  display:block;font-style:italic;
+  color:var(--latte);font-weight:400;
+}
+.hero-sub{
+  font-family:var(--serif);font-size:clamp(16px,2vw,22px);
+  font-style:italic;font-weight:300;
+  color:rgba(245,236,215,.6);
+  margin-bottom:40px;margin-top:10px;
+  opacity:0;animation:fadeUp .8s .7s forwards;
+}
+.hero-btns{
+  display:flex;gap:14px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .8s .9s forwards;
+}
+.btn-fill{
+  background:var(--caramel);color:var(--cream);
+  font-family:var(--sans);font-size:11px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:15px 36px;border:none;cursor:pointer;
+  border-radius:50px;transition:all .3s;
+  box-shadow:0 6px 24px rgba(139,94,60,.4);
+}
+.btn-fill:hover{background:var(--latte);transform:translateY(-2px);box-shadow:0 10px 30px rgba(196,149,106,.45)}
+.btn-ring{
+  background:transparent;color:var(--cream);
+  font-family:var(--sans);font-size:11px;font-weight:400;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:14px 36px;border:1.5px solid rgba(245,236,215,.45);
+  cursor:pointer;border-radius:50px;transition:all .3s;
+}
+.btn-ring:hover{border-color:var(--latte);color:var(--latte)}
+
+.hero-info{
+  position:absolute;bottom:40px;left:0;right:0;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  padding:0 7%;z-index:2;
+  opacity:0;animation:fadeUp .8s 1.1s forwards;
+}
+.hero-rating{display:flex;align-items:center;gap:10px}
+.hero-stars{color:var(--latte);font-size:18px;letter-spacing:2px}
+.hero-rating-text{font-size:12px;color:rgba(245,236,215,.55);line-height:1.5}
+.hero-rating-num{font-family:var(--serif);font-size:28px;color:var(--cream);margin-right:6px}
+.hero-scroll{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;
+}
+.hero-scroll-line{
+  width:1px;height:44px;
+  background:linear-gradient(to bottom,var(--latte),transparent);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-scroll span{
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(245,236,215,.35);writing-mode:vertical-rl;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ SECTION SHARED ══ */
+section{padding:90px 7%}
+.section-label{
+  font-family:var(--sans);font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--caramel);
+  margin-bottom:10px;display:flex;align-items:center;gap:12px;
+}
+.section-label::before{content:'';width:28px;height:1px;background:var(--caramel)}
+.section-title{
+  font-family:var(--serif);
+  font-size:clamp(28px,3.5vw,48px);
+  font-weight:500;color:var(--espresso);
+  line-height:1.15;margin-bottom:14px;
+}
+.section-title em{font-style:italic;color:var(--caramel)}
+.brew-line{
+  width:44px;height:2px;background:var(--caramel);
+  border-radius:1px;margin:16px 0;
+}
+.brew-line.c{margin:16px auto}
+
+/* ══ ABOUT ══ */
+#about{background:var(--oat)}
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:72px;align-items:center;margin-top:56px;
+}
+.about-visual{position:relative;height:500px}
+.about-img{
+  position:absolute;inset:0;border-radius:var(--radius);
+  overflow:hidden;
+  background-image:url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80');
+  background-size:cover;background-position:center;
+}
+.about-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(26,17,8,.5) 0%,transparent 60%);
+  border-radius:var(--radius);
+}
+.about-img2{
+  position:absolute;
+  bottom:-32px;right:-32px;
+  width:200px;height:200px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  border:4px solid var(--oat);
+  background-image:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80');
+  background-size:cover;background-position:center;
+  box-shadow:0 12px 40px rgba(26,17,8,.25);
+}
+.about-badge{
+  position:absolute;
+  top:24px;left:-20px;
+  width:96px;height:96px;
+  background:var(--caramel);
+  border-radius:50%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  box-shadow:0 10px 32px rgba(139,94,60,.4);
+}
+.ab-num{
+  font-family:var(--serif);font-size:30px;
+  font-weight:700;color:var(--cream);line-height:1;
+}
+.ab-text{
+  font-family:var(--sans);font-size:8px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(245,236,215,.8);margin-top:3px;text-align:center;
+}
+.about-text p{
+  font-size:15px;font-weight:300;
+  color:#4a3520;line-height:1.9;margin-bottom:18px;
+}
+.about-stats{
+  display:flex;gap:36px;
+  padding:28px 0;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  margin:28px 0;
+}
+.as-num{
+  font-family:var(--serif);font-size:36px;
+  font-weight:500;color:var(--caramel);line-height:1;
+}
+.as-label{
+  font-family:var(--sans);font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:5px;
+}
+.about-highlights{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.ah{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:300;color:#4a3520}
+.ah::before{content:'☕';font-size:14px;flex-shrink:0}
+
+/* ══ MENU ══ */
+#menu{background:var(--roast)}
+#menu .section-title{color:var(--cream)}
+#menu .section-label{color:var(--latte)}
+#menu .brew-line{background:var(--latte)}
+.menu-tabs{
+  display:flex;gap:0;margin:40px 0 48px;
+  border-bottom:1px solid rgba(245,236,215,.1);
+  flex-wrap:wrap;
+}
+.mtab{
+  font-family:var(--sans);font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(245,236,215,.4);
+  padding:13px 26px;cursor:pointer;
+  border-bottom:2px solid transparent;
+  transition:all .2s;background:none;border-top:none;
+  border-left:none;border-right:none;
+  font-family:var(--sans);
+}
+.mtab.active{color:var(--latte);border-bottom-color:var(--latte)}
+.mtab:hover{color:var(--cream2)}
+.menu-panel{display:none;grid-template-columns:1fr 1fr;gap:12px}
+.menu-panel.active{display:grid}
+.mi{
+  display:flex;justify-content:space-between;
+  align-items:flex-start;gap:16px;
+  padding:18px 20px;
+  background:rgba(245,236,215,.04);
+  border:1px solid rgba(245,236,215,.07);
+  border-radius:10px;transition:background .25s;
+}
+.mi:hover{background:rgba(245,236,215,.07)}
+.mi-info{}
+.mi-name{font-size:14px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.mi-desc{font-size:12px;color:rgba(245,236,215,.4);line-height:1.5}
+.mi-tag{
+  display:inline-block;margin-top:6px;
+  font-size:10px;letter-spacing:.06em;
+  color:var(--latte);background:rgba(196,149,106,.12);
+  padding:3px 9px;border-radius:20px;
+}
+.mi-price{
+  font-family:var(--serif);font-size:20px;
+  font-weight:500;color:var(--latte);
+  white-space:nowrap;
+}
+
+/* ══ SPECIALS ══ */
+#specials{background:var(--cream2)}
+.specials-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;margin-top:52px;
+}
+.spec-card{
+  background:var(--white);border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(26,17,8,.08);
+  transition:transform .3s,box-shadow .3s;cursor:pointer;
+}
+.spec-card:hover{transform:translateY(-5px);box-shadow:0 16px 44px rgba(26,17,8,.15)}
+.spec-img{height:200px;overflow:hidden;position:relative}
+.spec-img img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s;
+}
+.spec-card:hover .spec-img img{transform:scale(1.08)}
+.spec-ribbon{
+  position:absolute;top:14px;left:14px;
+  background:var(--caramel);color:var(--white);
+  font-family:var(--sans);font-size:9px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;
+}
+.spec-body{padding:22px}
+.spec-name{
+  font-family:var(--serif);font-size:20px;
+  font-weight:600;color:var(--espresso);margin-bottom:6px;
+}
+.spec-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.spec-footer{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding-top:14px;border-top:1px solid #f0e8d8;
+}
+.spec-price{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--caramel)}
+.spec-order{
+  background:var(--caramel);color:var(--white);
+  font-family:var(--sans);font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:8px 18px;border:none;cursor:pointer;
+  border-radius:50px;transition:all .25s;
+}
+.spec-order:hover{background:var(--mocha)}
+
+/* ══ GALLERY ══ */
+#gallery{background:var(--oat);padding-bottom:100px}
+.gallery-header{margin-bottom:48px}
+.gal-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:200px;
+  gap:6px;border-radius:var(--radius);overflow:hidden;
+}
+.gi{overflow:hidden;position:relative;cursor:pointer}
+.gi:nth-child(1){grid-column:span 5;grid-row:span 2}
+.gi:nth-child(2){grid-column:span 4}
+.gi:nth-child(3){grid-column:span 3}
+.gi:nth-child(4){grid-column:span 3}
+.gi:nth-child(5){grid-column:span 4}
+.gi img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .6s;
+}
+.gi:hover img{transform:scale(1.07)}
+.gi-overlay{
+  position:absolute;inset:0;
+  background:rgba(26,17,8,.4);
+  opacity:0;transition:opacity .3s;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;
+}
+.gi:hover .gi-overlay{opacity:1}
+
+/* ══ TESTIMONIALS ══ */
+#testimonials{
+  background:var(--espresso);
+  text-align:center;
+}
+#testimonials .section-title{color:var(--cream)}
+#testimonials .section-label{color:var(--latte);justify-content:center}
+#testimonials .section-label::before{display:none}
+#testimonials .brew-line{background:var(--latte)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.tc{
+  background:rgba(245,236,215,.05);
+  border:1px solid rgba(245,236,215,.08);
+  border-radius:var(--radius);padding:30px 26px;
+  text-align:left;transition:background .3s;
+}
+.tc:hover{background:rgba(245,236,215,.08)}
+.tc-stars{color:var(--latte);font-size:16px;letter-spacing:2px;margin-bottom:14px}
+.tc-text{
+  font-family:var(--serif);font-size:16px;font-style:italic;
+  font-weight:400;color:rgba(245,236,215,.7);
+  line-height:1.8;margin-bottom:20px;
+}
+.tc-author{display:flex;align-items:center;gap:12px}
+.tc-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--caramel);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:16px;font-weight:700;
+  color:var(--cream);flex-shrink:0;
+}
+.tc-name{font-size:13px;font-weight:500;color:var(--cream)}
+.tc-source{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ══ VISIT INFO ══ */
+#visit{background:var(--cream2)}
+.visit-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+.visit-card{
+  background:var(--white);border-radius:var(--radius);
+  padding:36px;box-shadow:0 4px 20px rgba(26,17,8,.07);
+}
+.vc-title{
+  font-family:var(--serif);font-size:22px;font-weight:600;
+  color:var(--espresso);margin-bottom:24px;
+}
+.vc-item{display:flex;gap:14px;margin-bottom:22px}
+.vc-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:#FFF4E8;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+}
+.vc-label{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--caramel);font-weight:600;margin-bottom:5px;
+}
+.vc-val{font-size:14px;font-weight:300;color:#4a3520;line-height:1.7}
+
+.map-box{
+  background:linear-gradient(135deg,var(--roast),var(--mocha));
+  border-radius:var(--radius);height:220px;
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:10px;margin-top:24px;
+  cursor:pointer;transition:opacity .3s;
+}
+.map-box:hover{opacity:.85}
+.map-box span{font-size:12px;color:rgba(245,236,215,.5);letter-spacing:.1em}
+
+/* ══ BOOKING FORM ══ */
+#booking{background:var(--oat)}
+.booking-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:72px;align-items:start;margin-top:56px}
+.booking-info{display:flex;flex-direction:column;gap:28px}
+.bi{display:flex;gap:16px;align-items:flex-start}
+.bi-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:var(--cream2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0;
+  border:1px solid var(--border);
+}
+.bi-label{
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--caramel);font-weight:600;margin-bottom:5px;
+}
+.bi-val{font-size:14px;font-weight:300;color:#4a3520;line-height:1.7}
+.social-row{display:flex;gap:12px;margin-top:8px}
+.soc{
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;cursor:pointer;transition:all .25s;
+}
+.soc:hover{border-color:var(--caramel);background:var(--cream2);transform:translateY(-2px)}
+
+.bform{
+  background:var(--white);border-radius:var(--radius);
+  padding:44px;
+  box-shadow:0 8px 36px rgba(26,17,8,.1);
+  border-top:4px solid var(--caramel);
+}
+.bf-title{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--espresso);margin-bottom:5px}
+.bf-sub{font-size:13px;color:var(--muted);margin-bottom:32px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.form-group label{
+  font-size:10px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--mocha);
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  font-family:var(--sans);font-size:14px;font-weight:300;
+  padding:12px 16px;
+  background:#fafaf6;border:1.5px solid #e8ddd0;
+  border-radius:10px;outline:none;color:var(--espresso);
+  transition:border .2s,background .2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:var(--caramel);
+  background:var(--white);
+  box-shadow:0 0 0 3px rgba(139,94,60,.08);
+}
+.form-group textarea{min-height:104px;resize:vertical}
+.form-submit{
+  width:100%;padding:16px;
+  background:var(--caramel);color:var(--white);
+  font-family:var(--sans);font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:none;border-radius:50px;cursor:pointer;
+  transition:all .3s;
+  box-shadow:0 4px 20px rgba(139,94,60,.35);
+}
+.form-submit:hover{background:var(--mocha);transform:translateY(-1px);box-shadow:0 8px 28px rgba(139,94,60,.4)}
+.form-note{font-size:11px;color:var(--muted);text-align:center;margin-top:12px}
+
+/* ══ FOOTER ══ */
+footer{
+  background:var(--espresso);
+  padding:60px 7% 24px;
+  border-top:1px solid var(--border);
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr;
+  gap:56px;margin-bottom:48px;
+}
+.f-logo{
+  font-family:var(--serif);font-size:22px;font-weight:600;
+  color:var(--cream);margin-bottom:6px;
+}
+.f-logo span{color:var(--latte)}
+.f-tagline{
+  font-family:var(--serif);font-size:14px;
+  font-style:italic;color:var(--latte);margin-bottom:16px;
+}
+.f-desc{font-size:13px;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:22px}
+.f-social{display:flex;gap:10px}
+.fsoc{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid rgba(245,236,215,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;cursor:pointer;transition:all .25s;
+}
+.fsoc:hover{border-color:var(--latte);background:rgba(196,149,106,.12);transform:translateY(-2px)}
+.f-head{
+  font-family:var(--sans);font-size:10px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--latte);margin-bottom:18px;
+}
+.f-ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.f-ul li{
+  font-size:13px;font-weight:300;color:var(--muted);
+  cursor:pointer;transition:color .2s;
+}
+.f-ul li:hover{color:var(--latte)}
+.footer-bottom{
+  border-top:1px solid rgba(245,236,215,.08);
+  padding-top:24px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.f-copy{font-size:11px;color:rgba(154,136,112,.5)}
+
+/* ══ FLOATING BUTTONS ══ */
+.wa-btn{
+  position:fixed;bottom:28px;right:28px;z-index:400;
+  width:54px;height:54px;border-radius:50%;
+  background:#25D366;
+  display:flex;align-items:center;justify-content:center;
+  font-size:25px;cursor:pointer;text-decoration:none;
+  box-shadow:0 6px 28px rgba(37,211,102,.4);
+  transition:transform .3s,box-shadow .3s;
+}
+.wa-btn:hover{transform:scale(1.1) translateY(-2px);box-shadow:0 10px 36px rgba(37,211,102,.5)}
+.wa-tooltip{
+  position:absolute;right:66px;
+  background:var(--espresso);color:var(--cream);
+  font-family:var(--sans);font-size:12px;
+  padding:8px 14px;border-radius:8px;
+  border:1px solid var(--border);
+  white-space:nowrap;opacity:0;pointer-events:none;
+  transition:opacity .2s;
+}
+.wa-btn:hover .wa-tooltip{opacity:1}
+#stbtn{
+  position:fixed;bottom:28px;left:28px;z-index:400;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(139,94,60,.15);
+  border:1px solid var(--border);
+  color:var(--caramel);font-size:16px;font-weight:700;
+  cursor:pointer;display:none;align-items:center;justify-content:center;
+  transition:all .3s;
+}
+#stbtn.vis{display:flex}
+#stbtn:hover{background:rgba(139,94,60,.3)}
+
+/* ══ TOAST ══ */
+.toast{
+  position:fixed;top:80px;right:22px;z-index:600;
+  background:var(--espresso);border:1px solid var(--caramel);
+  color:var(--cream);padding:14px 20px;
+  font-family:var(--sans);font-size:13px;
+  border-radius:10px;
+  display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 28px rgba(26,17,8,.3);
+  transform:translateX(120%);opacity:0;
+  transition:all .4s cubic-bezier(.16,1,.3,1);
+}
+.toast.show{transform:translateX(0);opacity:1}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .specials-grid{grid-template-columns:1fr 1fr}
+  .testi-grid{grid-template-columns:1fr 1fr}
+  .menu-panel.active{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-auto-rows:180px}
+  .gi:nth-child(n){grid-column:span 1;grid-row:span 1}
+  .gi:nth-child(1){grid-column:span 2;grid-row:span 1}
+  .gi:nth-child(5){grid-column:span 2}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  #navbar{padding:0 20px}
+  .nav-links,.nav-cta{display:none}
+  .hamburger{display:flex}
+  section{padding:68px 5%}
+  .hero-content{padding:0 5%}
+  .hero-info{padding:0 5%}
+  .about-grid,.visit-grid,.booking-grid{grid-template-columns:1fr;gap:40px}
+  .about-visual{height:320px}
+  .about-img2{width:140px;height:140px;bottom:-16px;right:0}
+  .about-badge{top:16px;left:-10px;width:80px;height:80px}
+  .ab-num{font-size:24px}
+  .specials-grid,.testi-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .bform{padding:26px 18px}
+  .footer-grid{grid-template-columns:1fr}
+  .about-stats{gap:20px;flex-wrap:wrap}
+  .gal-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero">
+    <div class="nav-logo-icon">☕</div>
+    <div class="nav-logo-text">The Fika Cafe<span>Kalwa · Thane</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#visit">Visit Us</a></li>
+    <li><a href="#booking">Reserve</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve a Table</button>
+  <div class="hamburger" id="ham" onclick="toggleMob()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div id="mob-nav">
+  <div style="font-family:var(--serif);font-size:22px;color:var(--cream);margin-bottom:8px">The <span style="color:var(--latte)">Fika</span> Cafe</div>
+  <a href="#about" onclick="toggleMob()">About</a>
+  <a href="#menu" onclick="toggleMob()">Menu</a>
+  <a href="#specials" onclick="toggleMob()">Specials</a>
+  <a href="#gallery" onclick="toggleMob()">Gallery</a>
+  <a href="#visit" onclick="toggleMob()">Visit Us</a>
+  <a href="#booking" onclick="toggleMob()">Reserve</a>
+  <button class="btn-fill" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'});toggleMob()" style="margin-top:10px">Reserve a Table</button>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-img"></div>
+  <div class="hero-art">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <circle cx="900" cy="200" r="300" fill="none" stroke="white" stroke-width="1"/>
+      <circle cx="900" cy="200" r="220" fill="none" stroke="white" stroke-width=".7"/>
+      <circle cx="900" cy="200" r="140" fill="none" stroke="white" stroke-width=".5"/>
+      <circle cx="900" cy="200" r="60" fill="rgba(255,255,255,.04)"/>
+      <path d="M200 600 Q400 500 600 560 Q800 620 1000 520" fill="none" stroke="rgba(196,149,106,0.3)" stroke-width="1.5"/>
+      <path d="M100 650 Q350 550 550 610 Q750 670 1100 560" fill="none" stroke="rgba(196,149,106,0.2)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tag">Kalwa's Favourite Cafe · Thane</div>
+    <h1 class="hero-h1">
+      The Fika
+      <em>Cafe</em>
+    </h1>
+    <p class="hero-sub">Flavor &amp; Vibes. Every Single Time.</p>
+    <div class="hero-btns">
+      <button class="btn-fill" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Explore Menu</button>
+      <button class="btn-ring" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve a Table</button>
+    </div>
+  </div>
+
+  <div class="hero-info">
+    <div class="hero-rating">
+      <div class="hero-rating-num">4.8</div>
+      <div>
+        <div class="hero-stars">★★★★★</div>
+        <div class="hero-rating-text">689+ Reviews · JustDial &amp; Google</div>
+      </div>
+    </div>
+    <div class="hero-scroll" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ ABOUT ══════ -->
+<section id="about">
+  <div class="section-label fade-up">Our Story</div>
+  <div class="about-grid">
+    <div class="about-visual fade-up d1">
+      <div class="about-img"><div class="about-img-overlay"></div></div>
+      <div class="about-img2"></div>
+      <div class="about-badge"><div class="ab-num">4.8★</div><div class="ab-text">Rated on<br>Google</div></div>
+    </div>
+    <div class="about-text">
+      <div class="section-label fade-up d1">About The Fika Cafe</div>
+      <h2 class="section-title fade-up d2">Kalwa's Favourite Spot for <em>Flavor & Vibes</em></h2>
+      <div class="brew-line fade-up d2"></div>
+      <p class="fade-up d3">Tucked away on 60 Feet Road in Kalwa West, The Fika Cafe was born from a simple idea — that great food, a warm atmosphere, and good company are all you need for a perfect time. We've become the go-to hangout for couples, families, and friend groups across Thane.</p>
+      <p class="fade-up d3">From cheesy pizzas and juicy burgers to loaded sandwiches and indulgent Italian dishes — every plate is made with love and served with the kind of warm, quick service that keeps our regulars coming back every week.</p>
+      <div class="about-stats fade-up d4">
+        <div><div class="as-num">689+</div><div class="as-label">Happy Reviews</div></div>
+        <div><div class="as-num">4.8★</div><div class="as-label">Avg Rating</div></div>
+        <div><div class="as-num">100%</div><div class="as-label">Good Vibes</div></div>
+      </div>
+      <div class="about-highlights fade-up d4">
+        <div class="ah">Amazing interiors &amp; cozy ambiance</div>
+        <div class="ah">Continental, Italian &amp; Fast Food</div>
+        <div class="ah">Perfect for dates, celebrations &amp; hangouts</div>
+        <div class="ah">Pocket-friendly prices, generous portions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ MENU ══════ -->
+<section id="menu">
+  <div class="section-label fade-up">What We Serve</div>
+  <h2 class="section-title fade-up d1" style="color:var(--cream)">Our <em style="color:var(--latte)">Menu</em></h2>
+  <div class="brew-line fade-up d2" style="background:var(--latte)"></div>
+  <p class="fade-up d2" style="font-size:14px;color:rgba(245,236,215,.5);max-width:520px;margin-top:12px">From morning coffee to late-night bites — freshly made, lovingly served.</p>
+
+  <div class="menu-tabs">
+    <button class="mtab active" onclick="switchTab('burgers',this)">Burgers</button>
+    <button class="mtab" onclick="switchTab('pizza',this)">Pizza</button>
+    <button class="mtab" onclick="switchTab('pasta',this)">Pasta & Italian</button>
+    <button class="mtab" onclick="switchTab('sandwiches',this)">Sandwiches</button>
+    <button class="mtab" onclick="switchTab('drinks',this)">Drinks & Coffee</button>
+    <button class="mtab" onclick="switchTab('desserts',this)">Desserts</button>
+  </div>
+
+  <!-- BURGERS -->
+  <div id="tab-burgers" class="menu-panel active">
+    <div class="mi"><div class="mi-info"><div class="mi-name">Classic Smash Burger</div><div class="mi-desc">Crispy smashed patty, cheddar, pickles, mustard-mayo sauce</div><div class="mi-tag">⭐ Bestseller</div></div><div class="mi-price">₹199</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Fika Special Burger</div><div class="mi-desc">Double patty, caramelised onions, special Fika sauce, jalapeños</div><div class="mi-tag">🔥 Chef's Pick</div></div><div class="mi-price">₹249</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Crispy Chicken Burger</div><div class="mi-desc">Fried chicken, coleslaw, sriracha mayo, brioche bun</div></div><div class="mi-price">₹229</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Mushroom Swiss Burger</div><div class="mi-desc">Sautéed mushrooms, Swiss cheese, garlic aioli, lettuce</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹189</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">BBQ Bacon Burger</div><div class="mi-desc">Smoky BBQ sauce, crispy bacon, onion rings, beef patty</div></div><div class="mi-price">₹269</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Paneer Tikka Burger</div><div class="mi-desc">Grilled paneer, mint chutney, tomato, onion, sesame bun</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹179</div></div>
+  </div>
+
+  <!-- PIZZA -->
+  <div id="tab-pizza" class="menu-panel">
+    <div class="mi"><div class="mi-info"><div class="mi-name">Margherita</div><div class="mi-desc">San Marzano tomato base, fresh mozzarella, basil, olive oil</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹299</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Cheesy Overload Pizza</div><div class="mi-desc">Four-cheese blend — mozzarella, cheddar, parmesan, gouda</div><div class="mi-tag">⭐ Most Ordered</div></div><div class="mi-price">₹349</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Chicken BBQ Pizza</div><div class="mi-desc">Grilled chicken, BBQ sauce, red onions, capsicum, jalapeños</div></div><div class="mi-price">₹379</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Arrabiata Pizza</div><div class="mi-desc">Spicy tomato base, bell peppers, olives, fresh herbs</div><div class="mi-tag">🌱 Veg · 🌶 Spicy</div></div><div class="mi-price">₹319</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Peri Peri Chicken Pizza</div><div class="mi-desc">Peri peri chicken, corn, capsicum, mozzarella, peri sauce drizzle</div></div><div class="mi-price">₹369</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">White Garlic Pizza</div><div class="mi-desc">Garlic cream base, mushrooms, spinach, mozzarella, rosemary</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹329</div></div>
+  </div>
+
+  <!-- PASTA -->
+  <div id="tab-pasta" class="menu-panel">
+    <div class="mi"><div class="mi-info"><div class="mi-name">Spaghetti Aglio e Olio</div><div class="mi-desc">Spaghetti, garlic, olive oil, chilli flakes, parmesan, parsley</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹249</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Penne Arrabiata</div><div class="mi-desc">Spicy tomato sauce, garlic, capers, pecorino, fresh basil</div><div class="mi-tag">⭐ Bestseller</div></div><div class="mi-price">₹269</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Creamy Chicken Pasta</div><div class="mi-desc">Grilled chicken, cream sauce, mushrooms, parmesan, tagliatelle</div></div><div class="mi-price">₹319</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Lasagna</div><div class="mi-desc">Layers of pasta, slow-cooked meat sauce, béchamel, mozzarella</div></div><div class="mi-price">₹349</div></div>
+  </div>
+
+  <!-- SANDWICHES -->
+  <div id="tab-sandwiches" class="menu-panel">
+    <div class="mi"><div class="mi-info"><div class="mi-name">Club Sandwich</div><div class="mi-desc">Triple-decker, chicken, bacon, egg, lettuce, tomato, mayo</div></div><div class="mi-price">₹199</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Grilled Cheese Sandwich</div><div class="mi-desc">Sourdough, aged cheddar, dijon mustard, caramelised onions</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹149</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Loaded Veggie Sub</div><div class="mi-desc">6-inch sub, grilled veggies, cream cheese, pesto, arugula</div><div class="mi-tag">🌱 Veg</div></div><div class="mi-price">₹169</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Chicken Tikka Wrap</div><div class="mi-desc">Spiced chicken tikka, mint chutney, onions, rolled flatbread</div></div><div class="mi-price">₹189</div></div>
+  </div>
+
+  <!-- DRINKS -->
+  <div id="tab-drinks" class="menu-panel">
+    <div class="mi"><div class="mi-info"><div class="mi-name">Cold Coffee</div><div class="mi-desc">Strong brewed coffee, milk, ice, a hint of caramel</div><div class="mi-tag">☕ Cafe Signature</div></div><div class="mi-price">₹129</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Cappuccino</div><div class="mi-desc">Espresso, steamed milk foam, cocoa dusting</div></div><div class="mi-price">₹99</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Mango Mojito</div><div class="mi-desc">Fresh mango, mint, lime, soda, topped with mango slices</div><div class="mi-tag">🥭 Summer Hit</div></div><div class="mi-price">₹149</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Oreo Shake</div><div class="mi-desc">Thick milkshake, crushed Oreos, vanilla ice cream, whipped cream</div><div class="mi-tag">⭐ Fan Favourite</div></div><div class="mi-price">₹169</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Lemon Iced Tea</div><div class="mi-desc">Chilled brewed tea, fresh lemon, honey, mint sprig</div></div><div class="mi-price">₹89</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Virgin Piña Colada</div><div class="mi-desc">Coconut cream, pineapple juice, crushed ice, pineapple wedge</div></div><div class="mi-price">₹159</div></div>
+  </div>
+
+  <!-- DESSERTS -->
+  <div id="tab-desserts" class="menu-panel">
+    <div class="mi"><div class="mi-info"><div class="mi-name">Nutella Brownie</div><div class="mi-desc">Warm fudge brownie, Nutella drizzle, vanilla ice cream scoop</div><div class="mi-tag">🍫 Must Try</div></div><div class="mi-price">₹149</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Tiramisu</div><div class="mi-desc">Classic Italian dessert — espresso soaked ladyfingers, mascarpone</div></div><div class="mi-price">₹179</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Gulab Jamun Cheesecake</div><div class="mi-desc">NY-style cheesecake topped with warm gulab jamun, rose syrup</div><div class="mi-tag">🌹 Fusion Special</div></div><div class="mi-price">₹199</div></div>
+    <div class="mi"><div class="mi-info"><div class="mi-name">Waffles &amp; Ice Cream</div><div class="mi-desc">Crispy Belgian waffles, 2 scoops ice cream, chocolate drizzle</div></div><div class="mi-price">₹169</div></div>
+  </div>
+</section>
+
+<!-- ══════ SPECIALS ══════ -->
+<section id="specials">
+  <div class="section-label fade-up">Chef Recommends</div>
+  <h2 class="section-title fade-up d1">Crowd <em>Favourites</em></h2>
+  <div class="brew-line fade-up d2"></div>
+  <p class="fade-up d2" style="font-size:14px;color:var(--muted);max-width:480px;margin-top:12px">Our most-loved dishes — ordered again and again by our regulars. You'll understand why.</p>
+  <div class="specials-grid">
+    <div class="spec-card fade-up d1">
+      <div class="spec-img">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Smash Burger">
+        <div class="spec-ribbon">⭐ Bestseller</div>
+      </div>
+      <div class="spec-body">
+        <div class="spec-name">Classic Smash Burger</div>
+        <div class="spec-desc">Crispy smashed patty, cheddar cheese, pickles, and our signature Fika sauce on a toasted brioche bun. Simple. Perfect. Addictive.</div>
+        <div class="spec-footer">
+          <div class="spec-price">₹199</div>
+          <button class="spec-order" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Order Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="spec-card fade-up d2">
+      <div class="spec-img">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Cheesy Pizza">
+        <div class="spec-ribbon">🔥 Most Ordered</div>
+      </div>
+      <div class="spec-body">
+        <div class="spec-name">Cheesy Overload Pizza</div>
+        <div class="spec-desc">A four-cheese explosion — mozzarella, cheddar, parmesan, and gouda piled high on a thin, crispy base. One slice is never enough.</div>
+        <div class="spec-footer">
+          <div class="spec-price">₹349</div>
+          <button class="spec-order" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Order Now</button>
+        </div>
+      </div>
+    </div>
+    <div class="spec-card fade-up d3">
+      <div class="spec-img">
+        <img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=600&q=80" alt="Nutella Brownie">
+        <div class="spec-ribbon">🍫 Must Try</div>
+      </div>
+      <div class="spec-body">
+        <div class="spec-name">Nutella Brownie + Ice Cream</div>
+        <div class="spec-desc">A warm, fudgy brownie drizzled with Nutella, served alongside a generous scoop of vanilla ice cream. The perfect end to any meal.</div>
+        <div class="spec-footer">
+          <div class="spec-price">₹149</div>
+          <button class="spec-order" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Order Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ GALLERY ══════ -->
+<section id="gallery">
+  <div class="gallery-header">
+    <div class="section-label fade-up">Inside The Fika</div>
+    <h2 class="section-title fade-up d1">The <em>Vibe</em></h2>
+    <div class="brew-line fade-up d2"></div>
+  </div>
+  <div class="gal-grid fade-up d2">
+    <div class="gi"><img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80" alt="Cafe ambiance"><div class="gi-overlay">📷</div></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1521017432531-fbd92d768814?w=600&q=80" alt="Cafe interior"><div class="gi-overlay">📷</div></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80" alt="Coffee"><div class="gi-overlay">📷</div></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Burger"><div class="gi-overlay">📷</div></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Fine dining setup"><div class="gi-overlay">📷</div></div>
+  </div>
+  <p class="fade-up" style="text-align:center;font-size:12px;color:var(--muted);margin-top:24px;font-style:italic">Follow us on Instagram @thefikacafe for daily updates · Tag us in your Fika moments!</p>
+</section>
+
+<!-- ══════ TESTIMONIALS ══════ -->
+<section id="testimonials">
+  <div class="section-label fade-up">Happy Guests</div>
+  <h2 class="section-title fade-up d1">What People <em>Say</em></h2>
+  <div class="brew-line c fade-up d2" style="background:var(--latte)"></div>
+  <div class="testi-grid">
+    <div class="tc fade-up d1">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-text">"Great ambiance, delicious fast food, and amazing Italian dishes. Whether you're in the mood for a quick bite or a full meal, this place never disappoints. The staff is friendly and the service is quick. Perfect for a casual hangout!"</div>
+      <div class="tc-author"><div class="tc-avatar">R</div><div><div class="tc-name">Rahul M.</div><div class="tc-source">Google Review</div></div></div>
+    </div>
+    <div class="tc fade-up d2">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-text">"This best cafe in Kalwa/Thane — great vibes, amazing continental food, and the perfect setup for couples. With cheesy pizzas, juicy burgers, and loaded sandwiches, it's the ideal spot for a date or a chill hangout."</div>
+      <div class="tc-author"><div class="tc-avatar">P</div><div><div class="tc-name">Priya S.</div><div class="tc-source">Restaurant Guru</div></div></div>
+    </div>
+    <div class="tc fade-up d3">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-text">"Best cafe in Thane. They serve delicious food at pocket-friendly prices. We visited for a birthday celebration and the whole experience was lovely. The interiors are gorgeous and the food is absolutely top-notch!"</div>
+      <div class="tc-author"><div class="tc-avatar">A</div><div><div class="tc-name">Ananya K.</div><div class="tc-source">Tripadvisor</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ VISIT ══════ -->
+<section id="visit">
+  <div class="section-label fade-up">Find Us</div>
+  <h2 class="section-title fade-up d1">Visit <em>The Fika</em></h2>
+  <div class="brew-line fade-up d2"></div>
+  <div class="visit-grid" style="margin-top:52px">
+    <div class="fade-up d1">
+      <div class="visit-card">
+        <div class="vc-title">📍 Location & Hours</div>
+        <div class="vc-item">
+          <div class="vc-icon">📍</div>
+          <div>
+            <div class="vc-label">Address</div>
+            <div class="vc-val">Shop No. 3 &amp; 4, Maple Paradise<br>60 Feet Road, Kalwa West<br>Kharegaon, Thane — 400605</div>
+          </div>
+        </div>
+        <div class="vc-item">
+          <div class="vc-icon">🕐</div>
+          <div>
+            <div class="vc-label">Opening Hours</div>
+            <div class="vc-val">Monday – Sunday<br>12:00 PM – 11:30 PM<br><span style="color:var(--caramel);font-size:12px">Open all 7 days!</span></div>
+          </div>
+        </div>
+        <div class="vc-item">
+          <div class="vc-icon">📞</div>
+          <div>
+            <div class="vc-label">Phone / WhatsApp</div>
+            <div class="vc-val">74475 51140<br>76660 22888</div>
+          </div>
+        </div>
+        <div class="vc-item">
+          <div class="vc-icon">📸</div>
+          <div>
+            <div class="vc-label">Social Media</div>
+            <div class="vc-val">@thefikacafe<br><span style="color:var(--muted);font-size:12px">Instagram · Facebook</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fade-up d2">
+      <div class="visit-card">
+        <div class="vc-title">✨ What to Expect</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div class="ah" style="font-size:14px;color:#4a3520;display:flex;align-items:flex-start;gap:12px"><span style="font-size:18px;flex-shrink:0">🍔</span><div><strong style="display:block;margin-bottom:3px">Burgers &amp; Fast Food</strong><span style="color:var(--muted);font-size:12px">Crispy, loaded, and utterly satisfying</span></div></div>
+          <div class="ah" style="font-size:14px;color:#4a3520;display:flex;align-items:flex-start;gap:12px"><span style="font-size:18px;flex-shrink:0">🍕</span><div><strong style="display:block;margin-bottom:3px">Italian Cuisine</strong><span style="color:var(--muted);font-size:12px">Authentic pizzas and pasta made with care</span></div></div>
+          <div class="ah" style="font-size:14px;color:#4a3520;display:flex;align-items:flex-start;gap:12px"><span style="font-size:18px;flex-shrink:0">☕</span><div><strong style="display:block;margin-bottom:3px">Coffee &amp; Beverages</strong><span style="color:var(--muted);font-size:12px">Cold coffee, shakes, mojitos &amp; more</span></div></div>
+          <div class="ah" style="font-size:14px;color:#4a3520;display:flex;align-items:flex-start;gap:12px"><span style="font-size:18px;flex-shrink:0">🎂</span><div><strong style="display:block;margin-bottom:3px">Celebrations Welcome</strong><span style="color:var(--muted);font-size:12px">Birthdays, dates, group hangouts</span></div></div>
+          <div class="ah" style="font-size:14px;color:#4a3520;display:flex;align-items:flex-start;gap:12px"><span style="font-size:18px;flex-shrink:0">🛵</span><div><strong style="display:block;margin-bottom:3px">Home Delivery Available</strong><span style="color:var(--muted);font-size:12px">Order online via Swiggy &amp; Zomato</span></div></div>
+        </div>
+      </div>
+      <div class="map-box" onclick="window.open('https://maps.google.com/?q=The+Fika+Cafe+Kalwa+Thane','_blank')">
+        <span style="font-size:32px">🗺️</span>
+        <span>60 Feet Road, Kalwa West, Thane</span>
+        <span style="color:var(--latte);font-size:12px;letter-spacing:.06em">Click to open in Google Maps →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ BOOKING / CONTACT ══════ -->
+<section id="booking">
+  <div class="section-label fade-up">Make a Reservation</div>
+  <h2 class="section-title fade-up d1">Reserve Your <em>Table</em></h2>
+  <div class="brew-line fade-up d2"></div>
+  <div class="booking-grid">
+    <div class="booking-info">
+      <div class="bi fade-up d1">
+        <div class="bi-icon">📍</div>
+        <div><div class="bi-label">Address</div><div class="bi-val">Shop 3 &amp; 4, Maple Paradise, 60 Feet Road<br>Kalwa West, Thane — 400605</div></div>
+      </div>
+      <div class="bi fade-up d2">
+        <div class="bi-icon">📞</div>
+        <div><div class="bi-label">Call Us</div><div class="bi-val">74475 51140<br>76660 22888</div></div>
+      </div>
+      <div class="bi fade-up d2">
+        <div class="bi-icon">💬</div>
+        <div><div class="bi-label">WhatsApp</div><div class="bi-val">74475 51140<br>Open daily 12pm – 11pm</div></div>
+      </div>
+      <div class="bi fade-up d3">
+        <div class="bi-icon">✉️</div>
+        <div><div class="bi-label">Email</div><div class="bi-val">thefikacafe@gmail.com</div></div>
+      </div>
+      <div class="fade-up d3">
+        <div class="bi-label" style="margin-bottom:14px">Follow Us</div>
+        <div class="social-row">
+          <div class="soc" title="Instagram">📸</div>
+          <div class="soc" title="Facebook">👍</div>
+          <div class="soc" title="YouTube">▶️</div>
+          <div class="soc" title="WhatsApp">💬</div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:12px">@thefikacafe on Instagram</p>
+      </div>
+      <div class="fade-up d4" style="background:var(--cream2);border-radius:var(--radius);padding:24px;border-left:4px solid var(--caramel)">
+        <div style="font-family:var(--serif);font-size:18px;font-weight:600;color:var(--espresso);margin-bottom:8px">Also Order Online!</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7">Can't make it in person? Order from The Fika Cafe on Swiggy and Zomato for doorstep delivery. Same great taste, straight to your home. 🛵</p>
+      </div>
+    </div>
+
+    <div class="bform fade-up d2">
+      <div class="bf-title">Book a Table</div>
+      <div class="bf-sub">Fill in your details and we'll confirm your reservation within 30 minutes.</div>
+      <div class="form-row">
+        <div class="form-group"><label>Your Name</label><input type="text" placeholder="Rahul Sharma"></div>
+        <div class="form-group"><label>Phone / WhatsApp</label><input type="tel" placeholder="+91 98765 43210"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="rahul@email.com"></div>
+        <div class="form-group"><label>Number of Guests</label>
+          <select>
+            <option>1 Person</option>
+            <option selected>2 People</option>
+            <option>3–4 People</option>
+            <option>5–6 People</option>
+            <option>7+ People</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Date</label><input type="date"></div>
+        <div class="form-group"><label>Preferred Time</label>
+          <select>
+            <option>12:00 PM – 2:00 PM (Lunch)</option>
+            <option>3:00 PM – 5:00 PM (Evening)</option>
+            <option selected>7:00 PM – 9:00 PM (Dinner)</option>
+            <option>9:00 PM – 11:00 PM (Late Night)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Occasion / Special Request</label><textarea placeholder="Birthday celebration? Anniversary? Any dietary preferences or special setup? Let us know and we'll make it special! 🎂"></textarea></div>
+      <button class="form-submit" onclick="submitForm()">Confirm Reservation ☕</button>
+      <div class="form-note">✓ We confirm within 30 mins &nbsp;·&nbsp; ✓ No prepayment &nbsp;·&nbsp; ✓ Free cancellation</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="f-logo">The Fika <span>Cafe</span></div>
+      <div class="f-tagline">Kalwa's favourite spot for flavor &amp; vibes</div>
+      <div class="f-desc">Serving smiles, great food, and good vibes at 60 Feet Road, Kalwa West since day one. Come for the burgers, stay for the atmosphere. We can't wait to have you here.</div>
+      <div class="f-social">
+        <div class="fsoc" title="Instagram">📸</div>
+        <div class="fsoc" title="Facebook">👍</div>
+        <div class="fsoc" title="YouTube">▶️</div>
+        <div class="fsoc" title="WhatsApp">💬</div>
+      </div>
+    </div>
+    <div>
+      <div class="f-head">Quick Links</div>
+      <ul class="f-ul">
+        <li onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About Us</li>
+        <li onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Our Menu</li>
+        <li onclick="document.getElementById('specials').scrollIntoView({behavior:'smooth'})">Chef Specials</li>
+        <li onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">Gallery</li>
+        <li onclick="document.getElementById('visit').scrollIntoView({behavior:'smooth'})">Visit Us</li>
+        <li onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve a Table</li>
+      </ul>
+    </div>
+    <div>
+      <div class="f-head">Contact</div>
+      <ul class="f-ul">
+        <li>📍 Maple Paradise, 60 Feet Rd</li>
+        <li>🏙️ Kalwa West, Thane 400605</li>
+        <li>📞 74475 51140</li>
+        <li>📞 76660 22888</li>
+        <li>📸 @thefikacafe</li>
+        <li style="color:var(--latte);margin-top:10px;cursor:pointer" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Reserve a Table →</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="f-copy">© 2025 The Fika Cafe · Kalwa, Thane. All rights reserved.</div>
+    <div class="f-copy" style="font-style:italic;font-family:var(--serif);font-size:13px;color:rgba(196,149,106,.3)">Flavor &amp; Vibes. Every Single Time. ☕</div>
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a class="wa-btn" href="https://wa.me/917447551140" target="_blank">
+  <div class="wa-tooltip">Reserve on WhatsApp</div>
+  💬
+</a>
+
+<!-- SCROLL TOP -->
+<button id="stbtn" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- TOAST -->
+<div class="toast" id="toast">☕ &nbsp;Table reserved! We'll confirm on WhatsApp shortly.</div>
+
+<script>
+/* NAVBAR */
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('stbtn').classList.toggle('vis', window.scrollY > 500);
+});
+document.getElementById('navbar').classList.add('scrolled');
+
+/* MOBILE NAV */
+function toggleMob() {
+  document.getElementById('mob-nav').classList.toggle('open');
+}
+
+/* MENU TABS */
+function switchTab(tab, btn) {
+  document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.mtab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* INTERSECTION OBSERVER */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+/* FORM SUBMIT */
+function submitForm() {
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4500);
+}
+</script>
+</body>
+</html>
